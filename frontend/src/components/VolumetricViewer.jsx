@@ -12,16 +12,18 @@ import { useViewer } from '../context/ViewerContext'
  */
 export default function VolumetricViewer() {
   const meshRef = useRef()
-  const { fileId, clipPlanes, transferFunction } = useViewer()
+  const { 
+    fileId, 
+    clipPlanes, 
+    transferFunction,
+    colorMode,
+    brightness,
+    contrast
+  } = useViewer()
   const { volumeTexture, dimensions, isLoading } = useVolumetricLoader(fileId)
   const { texture: demoTexture, dimensions: demoDimensions } = useDemoVolume()
 
-  // Rotate the volume for demo purposes
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2
-    }
-  })
+  // Remove auto-rotation - now using OrbitControls
 
   // Use real data if available, otherwise use demo
   const activeTexture = volumeTexture || demoTexture
@@ -52,6 +54,9 @@ export default function VolumetricViewer() {
         dimensions={activeDimensions}
         clipPlanes={clipPlanes}
         transferFunction={transferFunction}
+        colorMode={colorMode}
+        brightness={brightness}
+        contrast={contrast}
       />
     </mesh>
   )

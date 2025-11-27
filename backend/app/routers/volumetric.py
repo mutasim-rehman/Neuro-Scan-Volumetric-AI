@@ -94,3 +94,25 @@ async def list_available_files():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+@router.delete("/volumetric/{file_id}")
+async def delete_volumetric_file(file_id: str):
+    """
+    Delete a volumetric file and its cached data
+    """
+    try:
+        # Remove from cache
+        if file_id in processor.data_cache:
+            del processor.data_cache[file_id]
+        
+        # Delete file
+        deleted = file_storage.delete_file(file_id)
+        if not deleted:
+            raise HTTPException(status_code=404, detail=f"File {file_id} not found")
+        
+        return {"message": f"File {file_id} deleted successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting file: {str(e)}")
+

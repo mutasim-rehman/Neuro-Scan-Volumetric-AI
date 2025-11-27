@@ -12,7 +12,14 @@ export default function Controls() {
     updateClipPlane,
     transferFunction,
     setTransferFunction,
+    colorMode,
+    setColorMode,
+    brightness,
+    setBrightness,
+    contrast,
+    setContrast,
     setFileId,
+    selectedFile,
   } = useViewer()
   const fileInputRef = useRef(null)
   const [uploading, setUploading] = useState(false)
@@ -120,7 +127,63 @@ export default function Controls() {
             />
             <span>{transferFunction.toFixed(2)}</span>
           </div>
+          <div className="control-item">
+            <label>Color Mode</label>
+            <select
+              value={colorMode}
+              onChange={(e) => setColorMode(parseInt(e.target.value))}
+              className="color-mode-select"
+            >
+              <option value={0}>Grayscale</option>
+              <option value={1}>Heatmap</option>
+              <option value={2}>Rainbow</option>
+            </select>
+          </div>
+          <div className="control-item">
+            <label>Brightness</label>
+            <input
+              type="range"
+              min="0"
+              max="2"
+              step="0.1"
+              value={brightness}
+              onChange={(e) => setBrightness(parseFloat(e.target.value))}
+            />
+            <span>{brightness.toFixed(1)}</span>
+          </div>
+          <div className="control-item">
+            <label>Contrast</label>
+            <input
+              type="range"
+              min="0"
+              max="2"
+              step="0.1"
+              value={contrast}
+              onChange={(e) => setContrast(parseFloat(e.target.value))}
+            />
+            <span>{contrast.toFixed(1)}</span>
+          </div>
         </div>
+
+        {selectedFile && (
+          <div className="control-group">
+            <h3>File Info</h3>
+            <div className="file-info-display">
+              <div className="info-item">
+                <span className="info-label">File:</span>
+                <span className="info-value">{selectedFile.filename}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Size:</span>
+                <span className="info-value">
+                  {selectedFile.size > 1024 * 1024
+                    ? (selectedFile.size / (1024 * 1024)).toFixed(1) + ' MB'
+                    : (selectedFile.size / 1024).toFixed(1) + ' KB'}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="control-group">
           <h3>File Upload</h3>
