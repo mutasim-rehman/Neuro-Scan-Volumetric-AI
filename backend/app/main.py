@@ -22,6 +22,10 @@ app.add_middleware(
 
 # Include routers
 app.include_router(volumetric.router, prefix="/api", tags=["volumetric"])
+from app.routers import multi_channel
+app.include_router(multi_channel.router, prefix="/api", tags=["multi-channel"])
+from app.routers import segmentation
+app.include_router(segmentation.router, prefix="/api", tags=["segmentation"])
 
 
 @app.get("/")

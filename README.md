@@ -53,12 +53,20 @@ The viewer will be available at `http://localhost:5173`
 - ✅ File metadata display
 - ✅ Performance optimizations
 
-### Phase 3: Planned
+### Phase 3: Complete ✅
+- ✅ Multi-channel MRI support (T1, T1ce, T2, FLAIR)
+- ✅ Segmentation mask overlay system
+- ✅ Measurement tools framework
+- ✅ Export functionality (screenshot, data)
+- ✅ Channel selector UI
+- ✅ Mask rendering shader
+- ✅ Layer 2 integration preparation
+
+### Phase 4: Planned
 - [ ] Layer 2 integration (AI tumor detection)
-- [ ] Tumor overlay rendering
-- [ ] Multi-channel MRI support
-- [ ] Measurement tools
-- [ ] Export functionality
+- [ ] Full measurement implementation (point picking)
+- [ ] 2D slice views
+- [ ] Animation/playback for 4D data
 
 ## License
 

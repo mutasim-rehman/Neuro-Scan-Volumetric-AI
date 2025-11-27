@@ -5,6 +5,9 @@ import { ViewerProvider } from './context/ViewerContext'
 import VolumetricViewer from './components/VolumetricViewer'
 import Controls from './components/Controls'
 import FileManager from './components/FileManager'
+import ChannelSelector from './components/ChannelSelector'
+import MeasurementTools from './components/MeasurementTools'
+import ExportTools from './components/ExportTools'
 import './App.css'
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
         </Canvas>
         <Controls />
         <FileManager />
+        <ChannelSelector />
+        <MeasurementTools />
+        <ExportTools />
       </div>
     </ViewerProvider>
   )

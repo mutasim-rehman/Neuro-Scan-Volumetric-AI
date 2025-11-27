@@ -20,6 +20,10 @@ export default function Controls() {
     setContrast,
     setFileId,
     selectedFile,
+    showMask,
+    setShowMask,
+    maskOpacity,
+    setMaskOpacity,
   } = useViewer()
   const fileInputRef = useRef(null)
   const [uploading, setUploading] = useState(false)
@@ -184,6 +188,34 @@ export default function Controls() {
             </div>
           </div>
         )}
+
+        <div className="control-group">
+          <h3>Segmentation Mask</h3>
+          <div className="control-item">
+            <label>
+              <input
+                type="checkbox"
+                checked={showMask}
+                onChange={(e) => setShowMask(e.target.checked)}
+              />
+              Show Mask
+            </label>
+          </div>
+          {showMask && (
+            <div className="control-item">
+              <label>Mask Opacity</label>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={maskOpacity}
+                onChange={(e) => setMaskOpacity(parseFloat(e.target.value))}
+              />
+              <span>{maskOpacity.toFixed(2)}</span>
+            </div>
+          )}
+        </div>
 
         <div className="control-group">
           <h3>File Upload</h3>
