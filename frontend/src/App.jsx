@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { ViewerProvider } from './context/ViewerContext'
@@ -8,9 +8,14 @@ import FileManager from './components/FileManager'
 import ChannelSelector from './components/ChannelSelector'
 import MeasurementTools from './components/MeasurementTools'
 import ExportTools from './components/ExportTools'
+import HelpPanel from './components/HelpPanel'
+import ToastContainer from './components/ToastContainer'
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts'
 import './App.css'
 
 function App() {
+  useKeyboardShortcuts()
+
   return (
     <ViewerProvider>
       <div className="app">
@@ -33,6 +38,8 @@ function App() {
         <ChannelSelector />
         <MeasurementTools />
         <ExportTools />
+        <HelpPanel />
+        <ToastContainer />
       </div>
     </ViewerProvider>
   )

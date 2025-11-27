@@ -22,11 +22,18 @@ The system works by simulating light passing through a semi-transparent block of
    * **The Shader:** A custom Fragment Shader loops 256 times per pixel.  
    * **Sampling:** At every step, it samples the 3D texture density. High density \= High Opacity.
 
-## **3\. Core Features (Implemented)**
+## **3\. Core Features (Complete)**
 
 * **Volumetric Loader:** Parses custom binary protocol with 40-byte headers.  
 * **Slicing Tools:** X, Y, Z clipping planes implemented in GLSL.  
 * **Transfer Functions:** Maps data intensity to opacity (e.g., hiding empty space).
+* **Multi-Channel Support:** T1, T1ce, T2, FLAIR channel management.
+* **Segmentation Mask Overlay:** AI-generated tumor mask visualization.
+* **Measurement Tools:** Distance and angle measurement framework.
+* **Export Functionality:** Screenshot and data export.
+* **File Management:** Upload, list, select, and delete files.
+* **Camera Controls:** Orbit, zoom, and pan controls.
+* **User Experience:** Loading states, error handling, toast notifications, help system.
 
 ## **4\. How to Run (Visualization Only)**
 
