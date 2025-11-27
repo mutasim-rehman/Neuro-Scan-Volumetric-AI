@@ -12,6 +12,10 @@ See [Architecture.md](./Architecture.md) for detailed documentation.
 
 ## Quick Start
 
+### View 3D NIfTI Models in 5 Minutes
+
+**See [QUICK_START.md](./QUICK_START.md) for the fastest setup, or [SETUP.md](./SETUP.md) for detailed instructions.**
+
 ### Backend (Layer 1)
 
 ```bash
@@ -33,6 +37,14 @@ npm run dev
 ```
 
 The viewer will be available at `http://localhost:5173`
+
+### View Your First 3D Model
+
+1. Open browser: http://localhost:5173
+2. Click "Upload NIfTI File" in the control panel
+3. Select a `.nii` or `.nii.gz` file
+4. Your 3D model appears automatically!
+5. Use mouse to rotate, scroll to zoom, right-click to pan
 
 ## Development Status
 
