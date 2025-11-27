@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.nii
+*.nii.gz
+data/
+*.pt
+*.pth
+.DS_Store
+
