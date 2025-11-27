@@ -18,7 +18,7 @@ class VolumetricProcessor:
     """
     
     def __init__(self):
-        self.data_cache = {}  # Cache processed volumes
+        self.data_cache = {}  # Cache processed volumes (file_id -> binary_blob)
     
     def load_nifti(self, file_path: str) -> np.ndarray:
         """
@@ -71,13 +71,23 @@ class VolumetricProcessor:
           * reserved (28 bytes, zeros)
         - Data: float32 array (width * height * depth * 4 bytes)
         
+        Note: NIfTI arrays are typically (x, y, z) or (z, y, x) depending on orientation.
+        We use the shape as-is and store dimensions in header.
+        
         Args:
-            data: Normalized 3D array (float32)
+            data: Normalized 3D array (float32) - shape is (dim0, dim1, dim2)
             
         Returns:
             Binary blob ready for transmission
         """
-        height, width, depth = data.shape
+        # Get dimensions - NIfTI shape is typically (x, y, z) or similar
+        # We'll store them as width, height, depth in the header
+        dim0, dim1, dim2 = data.shape
+        
+        # For consistency with frontend expectations, we'll use:
+        # width = dim0, height = dim1, depth = dim2
+        # (This matches typical NIfTI orientation)
+        width, height, depth = dim0, dim1, dim2
         
         # Create 40-byte header
         header = struct.pack(
@@ -91,21 +101,27 @@ class VolumetricProcessor:
         header += b'\x00' * (40 - len(header))
         
         # Flatten and pack data as float32
-        data_flat = data.flatten(order='C')  # C-order (row-major)
+        # Use C-order (row-major) to match typical memory layout
+        data_flat = data.flatten(order='C')
         data_bytes = data_flat.tobytes()
         
         return header + data_bytes
     
-    def process_file(self, file_path: str) -> bytes:
+    def process_file(self, file_path: str, cache_key: Optional[str] = None) -> bytes:
         """
         Complete processing pipeline: load -> normalize -> pack.
         
         Args:
             file_path: Path to NIfTI file
+            cache_key: Optional cache key to store/retrieve processed data
             
         Returns:
             Binary blob in custom format
         """
+        # Check cache first
+        if cache_key and cache_key in self.data_cache:
+            return self.data_cache[cache_key]
+        
         # Load
         raw_data = self.load_nifti(file_path)
         
@@ -114,6 +130,10 @@ class VolumetricProcessor:
         
         # Pack
         binary_blob = self.pack_binary(normalized)
+        
+        # Cache if key provided
+        if cache_key:
+            self.data_cache[cache_key] = binary_blob
         
         return binary_blob
     

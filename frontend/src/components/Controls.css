@@ -87,3 +87,19 @@
   background: #3a8eef;
 }
 
+.upload-button {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+
+.error-message {
+  margin-top: 10px;
+  padding: 8px;
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  border-radius: 4px;
+  color: #ff6b6b;
+  font-size: 0.85em;
+}
+

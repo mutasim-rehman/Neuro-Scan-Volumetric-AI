@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { useViewer } from '../context/ViewerContext'
 import './Controls.css'
 
 /**
@@ -6,10 +7,59 @@ import './Controls.css'
  * Includes slicing controls and transfer function adjustment
  */
 export default function Controls() {
-  const [clipX, setClipX] = useState(0)
-  const [clipY, setClipY] = useState(0)
-  const [clipZ, setClipZ] = useState(0)
-  const [transferFunction, setTransferFunction] = useState(0.1)
+  const {
+    clipPlanes,
+    updateClipPlane,
+    transferFunction,
+    setTransferFunction,
+    setFileId,
+  } = useViewer()
+  const fileInputRef = useRef(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState(null)
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    const filename = file.name.toLowerCase()
+    if (!filename.endsWith('.nii') && !filename.endsWith('.nii.gz')) {
+      setUploadError('Invalid file type. Please upload a .nii or .nii.gz file.')
+      return
+    }
+
+    setUploading(true)
+    setUploadError(null)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = await fetch('/api/volumetric/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.detail || 'Upload failed')
+      }
+
+      const result = await response.json()
+      setFileId(result.file_id)
+      setUploadError(null)
+    } catch (error) {
+      setUploadError(error.message || 'Failed to upload file')
+      console.error('Upload error:', error)
+    } finally {
+      setUploading(false)
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    }
+  }
 
   return (
     <div className="controls">
@@ -25,10 +75,10 @@ export default function Controls() {
               min="-1"
               max="1"
               step="0.01"
-              value={clipX}
-              onChange={(e) => setClipX(parseFloat(e.target.value))}
+              value={clipPlanes[0]}
+              onChange={(e) => updateClipPlane(0, parseFloat(e.target.value))}
             />
-            <span>{clipX.toFixed(2)}</span>
+            <span>{clipPlanes[0].toFixed(2)}</span>
           </div>
           <div className="control-item">
             <label>Y Plane</label>
@@ -37,10 +87,10 @@ export default function Controls() {
               min="-1"
               max="1"
               step="0.01"
-              value={clipY}
-              onChange={(e) => setClipY(parseFloat(e.target.value))}
+              value={clipPlanes[1]}
+              onChange={(e) => updateClipPlane(1, parseFloat(e.target.value))}
             />
-            <span>{clipY.toFixed(2)}</span>
+            <span>{clipPlanes[1].toFixed(2)}</span>
           </div>
           <div className="control-item">
             <label>Z Plane</label>
@@ -49,10 +99,10 @@ export default function Controls() {
               min="-1"
               max="1"
               step="0.01"
-              value={clipZ}
-              onChange={(e) => setClipZ(parseFloat(e.target.value))}
+              value={clipPlanes[2]}
+              onChange={(e) => updateClipPlane(2, parseFloat(e.target.value))}
             />
-            <span>{clipZ.toFixed(2)}</span>
+            <span>{clipPlanes[2].toFixed(2)}</span>
           </div>
         </div>
 
@@ -74,9 +124,20 @@ export default function Controls() {
 
         <div className="control-group">
           <h3>File Upload</h3>
-          <button className="upload-button">
-            Upload NIfTI File
-          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".nii,.nii.gz"
+            onChange={handleFileUpload}
+            style={{ display: 'none' }}
+            id="file-upload"
+          />
+          <label htmlFor="file-upload" className="upload-button">
+            {uploading ? 'Uploading...' : 'Upload NIfTI File'}
+          </label>
+          {uploadError && (
+            <div className="error-message">{uploadError}</div>
+          )}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import VolumetricMaterial from './VolumetricMaterial'
 import { useVolumetricLoader } from '../hooks/useVolumetricLoader'
 import { useDemoVolume } from './DemoVolume'
+import { useViewer } from '../context/ViewerContext'
 
 /**
  * VolumetricViewer - Main 3D container for volumetric rendering
@@ -11,7 +12,8 @@ import { useDemoVolume } from './DemoVolume'
  */
 export default function VolumetricViewer() {
   const meshRef = useRef()
-  const { volumeTexture, dimensions, isLoading } = useVolumetricLoader()
+  const { fileId, clipPlanes, transferFunction } = useViewer()
+  const { volumeTexture, dimensions, isLoading } = useVolumetricLoader(fileId)
   const { texture: demoTexture, dimensions: demoDimensions } = useDemoVolume()
 
   // Rotate the volume for demo purposes
@@ -33,7 +35,7 @@ export default function VolumetricViewer() {
     return [w / maxDim, h / maxDim, d / maxDim]
   }, [activeDimensions])
 
-  if (isLoading && !volumeTexture) {
+  if (isLoading && !volumeTexture && fileId) {
     return (
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
@@ -45,7 +47,12 @@ export default function VolumetricViewer() {
   return (
     <mesh ref={meshRef} scale={scale}>
       <boxGeometry args={[1, 1, 1]} />
-      <VolumetricMaterial volumeTexture={activeTexture} dimensions={activeDimensions} />
+      <VolumetricMaterial 
+        volumeTexture={activeTexture} 
+        dimensions={activeDimensions}
+        clipPlanes={clipPlanes}
+        transferFunction={transferFunction}
+      />
     </mesh>
   )
 }

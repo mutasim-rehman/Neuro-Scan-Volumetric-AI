@@ -36,12 +36,20 @@ The viewer will be available at `http://localhost:5173`
 
 ## Development Status
 
-This is a skeleton implementation. Key features to implement:
-- [ ] NIfTI file loading (nibabel integration)
-- [ ] File upload endpoint
-- [ ] Volumetric texture binding in shader
-- [ ] Control panel state management
-- [ ] Error handling and loading states
+### Phase 1: Complete ✅
+- ✅ NIfTI file loading (nibabel integration)
+- ✅ File upload endpoint with storage
+- ✅ Volumetric texture binding in shader
+- ✅ Control panel state management (slicing planes, transfer function)
+- ✅ Error handling and loading states
+- ✅ Raymarching shader with 256 steps
+- ✅ Binary protocol implementation
+
+### Phase 2: Planned
+- [ ] Layer 2 integration (AI tumor detection)
+- [ ] Tumor overlay rendering
+- [ ] Multi-channel MRI support
+- [ ] Advanced transfer functions
 
 ## License
 
