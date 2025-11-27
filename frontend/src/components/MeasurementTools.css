@@ -1,0 +1,153 @@
+.measurement-toggle {
+  position: absolute;
+  bottom: 140px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.measurement-toggle:hover:not(:disabled) {
+  background: rgba(30, 30, 30, 0.95);
+  transform: scale(1.1);
+}
+
+.measurement-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.measurement-tools {
+  position: absolute;
+  bottom: 200px;
+  left: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+}
+
+.measurement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.measurement-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #ffffff;
+}
+
+.measurement-content {
+  padding: 15px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.measurement-info {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  color: #aaaaaa;
+  font-size: 0.85em;
+}
+
+.measurement-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.measure-button,
+.cancel-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+
+.measure-button {
+  background: #4a9eff;
+  color: white;
+}
+
+.measure-button:hover:not(:disabled) {
+  background: #3a8eef;
+}
+
+.measure-button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background: #ff6b6b;
+  color: white;
+}
+
+.cancel-button:hover {
+  background: #ee5a5a;
+}
+
+.measurements-list {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.measurements-list h4 {
+  margin: 0 0 10px 0;
+  color: #ffffff;
+  font-size: 1em;
+}
+
+.measurement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 0.9em;
+}
+
+.delete-measurement {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.delete-measurement:hover {
+  background: rgba(255, 107, 107, 0.2);
+}
+
