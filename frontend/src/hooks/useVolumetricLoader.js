@@ -26,7 +26,7 @@ export function useVolumetricLoader(fileId = null) {
         const { data, width, height, depth } = await loadVolumetricData(fileId)
         
         // Create 3D texture
-        const texture = new THREE.DataTexture3D(
+        const texture = new THREE.Data3DTexture(
           data,
           width,
           height,

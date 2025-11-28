@@ -301,6 +301,13 @@ npm install
 - Check slicing planes (reset to 0)
 - Try different color modes
 
+**Problem: Black screen after menus appear**
+- **Check browser console (F12)** - Look for red errors
+- **WebGL issue**: Update browser or enable hardware acceleration
+- **Shader error**: Check console for "Shader compilation failed"
+- **See**: [frontend/TROUBLESHOOTING.md](./frontend/TROUBLESHOOTING.md) for detailed fixes
+- The app now shows error messages instead of black screen - read the message!
+
 **Problem: Slow performance**
 - Reduce volume size if possible
 - Close other applications

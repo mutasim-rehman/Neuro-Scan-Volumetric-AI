@@ -13,6 +13,7 @@ import { useViewer } from '../context/ViewerContext'
  */
 export default function VolumetricViewer() {
   const meshRef = useRef()
+  
   const { 
     fileId, 
     clipPlanes, 

@@ -43,7 +43,7 @@ export function useDemoVolume() {
     const depth = 64
     const data = createDemoVolume(width, height, depth)
     
-    const texture = new THREE.DataTexture3D(data, width, height, depth)
+    const texture = new THREE.Data3DTexture(data, width, height, depth)
     texture.format = THREE.RedFormat
     texture.type = THREE.FloatType
     texture.minFilter = THREE.LinearFilter

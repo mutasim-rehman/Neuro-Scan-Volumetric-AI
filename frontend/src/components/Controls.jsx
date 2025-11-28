@@ -18,8 +18,11 @@ export default function Controls() {
     setBrightness,
     contrast,
     setContrast,
+    files,
+    setFiles,
     setFileId,
     selectedFile,
+    setSelectedFile,
     showMask,
     setShowMask,
     maskOpacity,
@@ -59,6 +62,16 @@ export default function Controls() {
 
       const result = await response.json()
       setFileId(result.file_id)
+      const newFile = {
+        file_id: result.file_id,
+        filename: result.filename || file.name,
+        size: file.size,
+      }
+      setFiles((prev = []) => {
+        const filtered = prev.filter((f) => f.file_id !== newFile.file_id)
+        return [...filtered, newFile]
+      })
+      setSelectedFile(newFile)
       setUploadError(null)
     } catch (error) {
       setUploadError(error.message || 'Failed to upload file')

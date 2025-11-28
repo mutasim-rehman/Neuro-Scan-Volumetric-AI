@@ -33,6 +33,18 @@ class FileStorage:
                     "size": file_path.stat().st_size if file_path.exists() else 0
                 }
     
+    def _infer_extension(self, filename: str) -> str:
+        """
+        Determine which extension the stored file should use.
+        Preserves .nii, .nii.gz, or falls back to .nii for unknown inputs.
+        """
+        suffixes = Path(filename).suffixes
+        if len(suffixes) >= 2 and suffixes[-2:] == ['.nii', '.gz']:
+            return '.nii.gz'
+        if suffixes:
+            return suffixes[-1]
+        return '.nii'
+    
     def save_file(self, file_content: bytes, filename: str) -> str:
         """
         Save uploaded file and return unique file_id.
@@ -45,7 +57,8 @@ class FileStorage:
             Unique file_id for retrieval
         """
         file_id = str(uuid.uuid4())
-        file_path = self.storage_dir / f"{file_id}.nii.gz"
+        extension = self._infer_extension(filename)
+        file_path = self.storage_dir / f"{file_id}{extension}"
         
         # Save file
         with open(file_path, 'wb') as f:

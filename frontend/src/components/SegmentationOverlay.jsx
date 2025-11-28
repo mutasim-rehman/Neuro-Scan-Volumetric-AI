@@ -158,6 +158,7 @@ const SegmentationShaderMaterial = shaderMaterial(
   `
 )
 
+// Register shader material
 extend({ SegmentationShaderMaterial })
 
 export default function SegmentationOverlay({

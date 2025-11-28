@@ -92,6 +92,13 @@ npm run dev
 - Try adjusting opacity threshold slider
 - Reset slicing planes to 0
 
+### Black screen after menus appear?
+- **Press F12** to open browser console
+- Look for **red error messages**
+- Check if WebGL is supported (error message will tell you)
+- See [frontend/TROUBLESHOOTING.md](./frontend/TROUBLESHOOTING.md)
+- The app now shows error messages instead of black screen!
+
 ### File upload fails?
 - Check file is `.nii` or `.nii.gz` format
 - File too large? Try smaller test file
